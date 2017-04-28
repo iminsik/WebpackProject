@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 //const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const VENDOR_LIBS = [
     "faker", "lodash", "react", "react-dom", "react-input-range",
@@ -13,7 +14,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].[chunkhash].js'
   },
   module: {
     rules: [
@@ -29,8 +30,16 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+        "process.env": {
+          "NODE_ENV": JSON.stringify("production")
+        }
+    }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
+      names: ['vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'   
     })
     //new UglifyJSPlugin()
   ]
