@@ -3,6 +3,8 @@ const path = require('path');
 
 const app = express();
 
+app.get('/hello', (req, res) => res.send({hello: 'world'}));
+
 if (process.env.NODE_ENV !== 'production') {
   const webpackMiddleware = require('webpack-dev-middleware');
   const webpack = require('webpack');
@@ -15,4 +17,4 @@ if (process.env.NODE_ENV !== 'production') {
   })
 }
 
-app.listen(3050, () => console.log('Listening'));
+app.listen(process.env.PORT || 3050, () => console.log('Listening'));
