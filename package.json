@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "NODE_ENV=production npm run clean && webpack -p",
+    "start": "npm build && node server.js",
     "serve": "webpack-dev-server",
     "push": "surge -p dist",
     "deploy": "npm run build && git subtree push --prefix dist origin gh-pages"
